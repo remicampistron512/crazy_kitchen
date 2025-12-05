@@ -1,9 +1,10 @@
 import threading
 import time
 import math
+from commis import Commis
 
 
-class BatteurOeufs(threading.Thread):
+class BatteurOeufs(Commis):
     def __init__(self, nb_oeufs):
         threading.Thread.__init__(self)
         self.nb_oeufs = nb_oeufs
@@ -16,7 +17,13 @@ class BatteurOeufs(threading.Thread):
             time.sleep(0.5)  # temps supposé d'un tour de batteur
 
 
-class FondeurChocolat(threading.Thread):
+class Verseur(Commis):
+    def __init__(self, quantite):
+        threading.Thread.__init__(self)
+        self.quantite = quantite  # en grammes
+
+
+class FondeurChocolat(Commis):
     def __init__(self, quantite):
         threading.Thread.__init__(self)
         self.quantite = quantite  # en grammes
@@ -39,6 +46,7 @@ class FondeurChocolat(threading.Thread):
 if __name__ == "__main__":
     batteur = BatteurOeufs(6)
     fondeur = FondeurChocolat(200)
+    fondeur2 = FondeurChocolat(200)
     batteur.start()
     fondeur.start()
     batteur.join()
